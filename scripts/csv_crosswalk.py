@@ -120,13 +120,13 @@ tags:
     na = []
     perm = []
 
-    for rule in glob.glob('../build/' + other_header + '/*/*.yaml'):
+    for rule in glob.glob('../build/' + other_header + '/rules/*/*.yaml'):
         if "supplemental" in rule or "srg" in rule or "baseline" in rule:
             continue
 
         with open(rule) as r:
             custom_rule = yaml.load(r, Loader=yaml.SafeLoader)
-            rule_id = rule.split(".yaml")[0].split("/")[4]
+            rule_id = rule.split(".yaml")[0].split("/")[5]
             
             
             if other_header in custom_rule['tags']:
@@ -142,6 +142,7 @@ tags:
                 
                 if "/audit/" in rule:
                     audit.append(rule_id)
+                    
                     continue
                 if "/auth/" in rule:
                     auth.append(rule_id)
@@ -163,13 +164,14 @@ tags:
 description: |
   This guide describes the actions to take when securing a macOS 11 system against the {}.
 profile:'''.format(other_header,other_header)
+    
     if len(audit) != 0:
+        
         full_baseline = full_baseline + '''
   - section: "Auditing"
     rules:'''
         audit.sort()
-    
-        
+
         for rule in audit:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
