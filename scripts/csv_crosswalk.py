@@ -90,11 +90,12 @@ def main():
             continue
         
         custom_rule = '''references:
-  {}:'''.format(other_header)
+  custom:
+    {}:'''.format(other_header)
         
         for control in control_array:
             custom_rule = custom_rule + '''
-    - {}'''.format(control)
+      - {}'''.format(control)
         
         custom_rule = custom_rule + '''
 tags:
